@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raças de Cachorros</title>
+    <style>
+        .breed button {
+            display: block;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .breed img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .breed {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="breeds"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const breedsContainer = document.getElementById('breeds');
+            const apiKey = 'live_PmSLjKcvgOk2aOAjKZpvsHCzVHN1al7Fby1crfOKXSkt3XLyv6VAonXWipkEpVNP';
+
+            const curiosities = {
+                "Affenpinscher": "Affenpinschers são conhecidos como 'macacos pequenos' por causa de suas expressões faciais.",
+                "Akita": "Akitas são conhecidos por sua lealdade e coragem.",
+                "Beagle": "Beagles têm um olfato incrivelmente aguçado e são frequentemente usados como cães farejadores.",
+                "Golden Retriever": "São excelentes cães-guia e de terapia devido à sua natureza gentil e paciente.",
+                "Bulldog Francês": "Apesar de sua aparência robusta, são muito afetuosos e adoram a companhia humana.",
+                "Husky Siberiano": "São conhecidos por seu uivo característico e foram usados como cães de trenó na Sibéria.",
+                "Chihuahua": "É a menor raça de cachorro do mundo e tem uma personalidade corajosa e confiante.",
+                "Dálmata": "Famosos por seu papel no filme '101 Dálmatas', são cães muito ativos e precisam de bastante exercício.",
+                "Basenji": "É a única raça de cachorro que não sabe latir. Em vez disso, emite um som conhecido como barroo."
+                // Adicione mais curiosidades aqui
+            };
+
+            const fetchBreeds = async () => {
+                try {
+                    const response = await fetch('https://api.thedogapi.com/v1/breeds', {
+                        headers: {
+                            'x-api-key': apiKey
+                        }
+                    });
+                    const data = await response.json();
+                    console.log(data); // Verifique se os dados estão corretos
+
+                    data.forEach(breed => {
+                        const breedElement = document.createElement('div');
+                        breedElement.classList.add('breed');
+
+                        breedElement.innerHTML = `
+                            <img src="${breed.image?.url || 'https://via.placeholder.com/200'}" alt="${breed.name}">
+                            <h2>${breed.name}</h2>
+                            <p>Temperamento: ${breed.temperament}</p>
+                            <p>Expectativa de Vida: ${breed.life_span}</p>
+                            <p>Origem: ${breed.origin || 'Desconhecida'}</p>
+                            <button onclick="showCuriosity('${breed.name}')">Mostrar Curiosidade</button>
+                            <p class="curiosidade" id="curiosity-${breed.name}" style="display: none;"></p>
+                        `;
+
+                        breedsContainer.appendChild(breedElement);
+                    });
+                } catch (error) {
+                    console.error('Erro ao buscar dados:', error);
+                }
+            };
+
+            window.showCuriosity = (breedName) => {
+                const curiosityElement = document.getElementById(`curiosity-${breedName}`);
+                curiosityElement.textContent = curiosities[breedName] || 'Nenhuma curiosidade disponível para esta raça.';
+                curiosityElement.style.display = 'block';
+            };
+
+            fetchBreeds();
+        });
+    </script>
+</body>
+</html>
