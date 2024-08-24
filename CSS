@@ -1,0 +1,56 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    text-align: center;
+}
+
+#breeds {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.breed {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.breed img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.breed h2 {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.breed p {
+    margin: 5px 0;
+}
+
+.breed button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.breed button:hover {
+    background-color: #0056b3;
+}
+
+.curiosity {
+    margin-top: 10px;
+    font-style: italic;
+    color: #555;
+}
